@@ -1,22 +1,17 @@
 import datetime as D
 import json as js
-import pickle as p
 class Hashing:
     def __init__(self):
         self.Number = 0
         self.list = []
         self.index = {}
-        self.Txt = "Test Text"
-        self.StrNumber = ""
-        self.MidSquareString = ""
-        self.MidSquare = ""
-        self.textjson = ""
         self.FirstName = ""
         self.LastName = ""
         self.Age = 0
         self.BirthDate = 0
         self.Text = ""
         self.Encrypt_data = 0
+
     def InputName(self):
         self.FirstName = str(input("First Name : "))
         self.Lastname = str(input("Last Name : "))
@@ -25,46 +20,51 @@ class Hashing:
         self.Text = str(input("Type your word for input : "))
         self.FullName = f"{self.FirstName} {self.LastName} your age is {self.Age}"
         print(self.FullName)
+
     def EncyptData(self):
         self.Encrypt_data = self.BirthDate[1:4]
         return self.Encrypt_data
+    
     def DumpsJSON(self):
         JsonString = js.dumps(self.list)
         return JsonString
+    
     def DirectHashing(self):
         Hashing.InputName(self)
-        self.index = {self.Encrypt_data : {Hashing.EncyptData(self): self.Text}}
+        self.index = {self.Encrypt_data : {Hashing.EncyptData(self) : {"FirstName" : self.FirstName,"Lastname" : self.LastName,"Age" : self.Age,"Text" : self.Text}}}
         self.list.append(self.index)
         Hashing.DumpsJSON(self)
         return self.list
+    
     def SubTractionHashing(self):
         Hashing.InputName(self)
         x = D.datetime.now()
         Year = x.strftime("%Y")
         Address = f"{Year}{Hashing.EncyptData(self)}"
-        self.index = {self.Encrypt_data : {Address : self.Text}}
-        self.list.append(self.index)
-        Hashing.DumpsJSON(self)
-        return self.list
-    def ModuleDivision(self):
-        Hashing.InputName(self)
-        Mod = int(input("Number for Mod : "))
-        self.Module = int(Hashing.EncyptData(self)) % Mod
-        self.index = {self.Encrypt_data : {self.Module : self.Text}}
-        self.list.append(self.index)
-        Hashing.DumpsJSON(self)
-        return self.list
-    def Square(self):#หาวิธีของการหา Mid ไม่เป็น
-        Hashing.InputName(self)
-        self.MidSquare = (int(Hashing.EncyptData(self)))**2
-        self.MidSquareString = str(self.MidSquare)
-        self.Mid = self.MidSquareString[:2]
-        self.index = {self.Encrypt_data : {self.Mid : self.Text}}
+        self.index = {self.Encrypt_data : {Address : {"FirstName" : self.FirstName,"Lastname" : self.LastName,"Age" : self.Age,"Text" : self.Text}}}
         self.list.append(self.index)
         Hashing.DumpsJSON(self)
         return self.list
     
-
+    def ModuleDivision(self):
+        Hashing.InputName(self)
+        Mod = int(input("Number for Mod : "))
+        self.Module = int(Hashing.EncyptData(self)) % Mod
+        self.index = {self.Encrypt_data : {self.Module : {"FirstName" : self.FirstName,"Lastname" : self.LastName,"Age" : self.Age,"Text" : self.Text}}}
+        self.list.append(self.index)
+        Hashing.DumpsJSON(self)
+        return self.list
+    
+    def MIDSquare(self):
+        Hashing.InputName(self)
+        self.MidSquare = (int(Hashing.EncyptData(self)))**2
+        self.MidSquareString = str(self.MidSquare)
+        self.Mid = self.MidSquareString[2:4]
+        self.index = {self.Encrypt_data : {self.Mid : {"FirstName" : self.FirstName,"Lastname" : self.LastName,"Age" : self.Age,"Text" : self.Text}}}
+        self.list.append(self.index)
+        Hashing.DumpsJSON(self)
+        return self.list
+    
 H = Hashing()
 Again = "y"
 while True:
@@ -78,7 +78,7 @@ while True:
         elif Choose == 3: 
             print(H.ModuleDivision())
         elif Choose == 4:
-            print(H.Square())
+            print(H.MIDSquare())
         else:
             print("Invalid : PLease type Again")
         Again = str(input("Would you like to use again? (y/n) : "))
